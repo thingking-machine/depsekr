@@ -291,11 +291,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             console.log('Initial llmResponseData:', llmResponseData)
                             // delete llmResponseData.stop_reason;
                             // console.log('Final assistantMessagePayload:', assistantMessagePayload)
-
+                            
+                            const desoupedText = llmSoupToText(llmResponseData.content);
+                            
+                            const desoupedThoughts = llmSoupToText(llmResponseData.reasoning_content);
+                            
                             const newCmjMessage = {
                                 role: llmResponseData.role,
                                 name: machineConfig.name,
-                                content: llmResponseData.content
+                                content: desoupedText
                             };
 
                             // cmjMessages (from the outer scope of the Alt+Shift listener) is updated
@@ -303,14 +307,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             // CmjToPlatoText is global
                             const updatedPlatoText = CmjToPlatoText(cmjMessages);
+                            
                             if (typeof updatedPlatoText !== 'string') {
                                 console.error('Failed to convert updated CMJ to PlatoText.');
                                 alert('Error processing the LLM response for display.');
                                 return;
                             }
-
-                            localStorage.setItem('multilogue', updatedPlatoText);
-
+                            
+                            // If the model did not respond with one of the utterances symbolizing 'pass'
+                            const passUtterances = ['...', 'silence', 'pass'];
+                            if (desoupedText && desoupedText.trim() !== '' &&
+                              !passUtterances.includes(desoupedText.trim().toLowerCase())) {
+                                localStorage.setItem('multilogue', updatedPlatoText);
+                            }
+                            if (desoupedThoughts && desoupedThoughts.trim() !== '') {
+                                localStorage.setItem('thoughts', desoupedThoughts);
+                            }
+                            
                             // updateDisplayState
                             updateDisplayState();
                             console.log('Dialogue updated with LLM response.');
