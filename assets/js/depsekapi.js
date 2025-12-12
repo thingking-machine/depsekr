@@ -83,7 +83,7 @@ self.onmessage = async function (event) {
       body: JSON.stringify(finalApiPayload)
     };
     
-    console.log('Worker: Making API call to OpenAI API with payload:', finalApiPayload);
+    console.log('Worker: Making API call throug proxy with payload:', finalApiPayload);
     const apiCallResponse = await fetch(machineConfig.server + '/proxy/?url='+machineConfig.apiUrl, apiOptions, {mode: "cors"});
     
     if (!apiCallResponse.ok) {
