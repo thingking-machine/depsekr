@@ -80,12 +80,11 @@ self.onmessage = async function (event) {
         'Authorization': 'Bearer ' + llmSettings.token,
         'Content-Type': 'application/json'
       },
-      url: machineConfig.apiUrl,
       body: JSON.stringify(finalApiPayload)
     };
     
     console.log('Worker: Making API call to OpenAI API with payload:', finalApiPayload);
-    const apiCallResponse = await fetch(machineConfig.server + '/proxy/', apiOptions, {mode: "cors"});
+    const apiCallResponse = await fetch(machineConfig.server + '/proxy/?url='+machineConfig.apiUrl, apiOptions, {mode: "cors"});
     
     if (!apiCallResponse.ok) {
       let errorDetails = await apiCallResponse.text();
