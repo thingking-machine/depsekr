@@ -17,7 +17,7 @@ machine:
   verb: Thingking
   instructions_file: depsekr_thingking.md
   token: depsek
-  server: https://localhost:443
+  server: https://localhost:8443
   apiUrl: https://api.deepseek.com/chat/completions
 
 app:
