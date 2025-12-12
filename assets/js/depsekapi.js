@@ -85,7 +85,7 @@ self.onmessage = async function (event) {
     };
     
     console.log('Worker: Making API call to OpenAI API with payload:', finalApiPayload);
-    const apiCallResponse = await fetch(machineConfig.server, apiOptions, {mode: "cors"});
+    const apiCallResponse = await fetch(machineConfig.server + '/proxy/', apiOptions, {mode: "cors"});
     
     if (!apiCallResponse.ok) {
       let errorDetails = await apiCallResponse.text();
