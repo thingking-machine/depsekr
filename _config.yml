@@ -15,7 +15,7 @@ description: A machine is a thing. Things can not think. ...but some of them can
 machine:
   name: Thingking-Machine
   verb: Thingking
-  instructions_file: depsekr_thingking.md
+  instructions_file: thingking_depsekr.md
   token: depsek
   server: https://localhost:8443
   apiUrl: https://api.deepseek.com/chat/completions
